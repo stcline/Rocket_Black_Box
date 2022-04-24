@@ -82,11 +82,11 @@ while True:
 	Gz = gyro_z/131.0
 	
 
-	print ("Gx=%.2f" %Gx, u'\u00b0'+ "/s", "\tGy=%.2f" %Gy, u'\u00b0'+ "/s", "\tGz=%.2f" %Gz, u'\u00b0'+ "/s", "\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
+	#print ("Gx=%.2f" %Gx, u'\u00b0'+ "/s", "\tGy=%.2f" %Gy, u'\u00b0'+ "/s", "\tGz=%.2f" %Gz, u'\u00b0'+ "/s", "\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
   
 	now = datetime.datetime.now()
 	with open('/home/pi/Rocket_Black_Box/rocketlog.csv', 'a', newline='') as csvfile:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az])
+		logwriter.writerow([Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az])
   
-	sleep(.2)
+	sleep(.05)
