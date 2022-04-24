@@ -22,6 +22,7 @@ GYRO_XOUT_H  = 0x43
 GYRO_YOUT_H  = 0x45
 GYRO_ZOUT_H  = 0x47
 
+x = 0
 
 def MPU_Init():
 	#write to sample rate register
@@ -60,7 +61,7 @@ MPU_Init()
 
 print (" Reading Data of Gyroscope and Accelerometer")
 
-while True:
+while (x < 6000):
 	
 	#Read Accelerometer raw value
 	acc_x = read_raw_data(ACCEL_XOUT_H)
@@ -89,4 +90,5 @@ while True:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
 		logwriter.writerow([Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az])
   
+	x = x + 1
 	sleep(.05)
