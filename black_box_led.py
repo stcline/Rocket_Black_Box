@@ -1,3 +1,7 @@
+'''
+Script turns camera on and records for five minutes.  Saves to dated file.
+
+'''
 from picamera import PiCamera
 from time import sleep
 import time
