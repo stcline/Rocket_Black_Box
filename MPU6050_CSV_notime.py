@@ -59,9 +59,9 @@ Device_Address = 0x68   # MPU6050 device address
 
 MPU_Init()
 
-print (" Reading Data of Gyroscope and Accelerometer")
+# print (" Reading Data of Gyroscope and Accelerometer")
 
-while (x < 6000):
+while (x < 6000): #run the script for 5 minutes (same as camera script)
 	
 	#Read Accelerometer raw value
 	acc_x = read_raw_data(ACCEL_XOUT_H)
