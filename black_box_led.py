@@ -16,7 +16,7 @@ def camera_rec():
 	filename = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 	camera.start_preview()
 	camera.start_recording(filename + '.h264')
-	sleep(5)
+	sleep(300)
 	camera.stop_recording()
 	camera.stop_preview()
 
