@@ -20,7 +20,7 @@ def camera_rec():
 	filename = 'rocket_vid' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 	camera.start_preview()
 	camera.start_recording(filename + '.h264')
-	sleep(300)
+	sleep(5)
 	camera.stop_recording()
 	camera.stop_preview()
 
@@ -28,3 +28,4 @@ def camera_rec():
 GPIO.output(led, GPIO.HIGH)
 camera_rec()
 GPIO.output(led, GPIO.LOW)
+GPIO.cleanup()
