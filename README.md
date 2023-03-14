@@ -19,3 +19,7 @@ https://github.com/adafruit/Adafruit_CircuitPython_BME280
 MPU6050 Gyroscope: https://www.electronicwings.com/sensors-modules/mpu6050-gyroscope-accelerometer-temperature-sensor-module
 With RPi: https://www.electronicwings.com/raspberry-pi/mpu6050-accelerometergyroscope-interfacing-with-raspberry-pi
 
+Video Naming Convention:
+
+
+![Rocket_vid_name](https://user-images.githubusercontent.com/22602103/224872636-065e27c9-b785-46be-bd47-c3e3e41daad3.png)
