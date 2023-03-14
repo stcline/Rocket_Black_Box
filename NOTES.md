@@ -27,5 +27,7 @@
 ## TODO
 
 1. Get the Accelerometer/Gyroscope working
-2. Get the Camera working
-3. Get the Buzzer working
+    - test on Pi4
+    - if not working, try another module
+3. ~~Get the Camera working~~
+4. Get the Buzzer working
