@@ -3,7 +3,6 @@
 
 import smbus
 import math
-import time
 
 # Register
 power_mgmt_1 = 0x6b
@@ -37,7 +36,6 @@ def get_x_rotation(x ,y ,z):
     return math.degrees(radians)
 
 bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
-time.sleep(1) #wait here to avoid 121 IO Error
 address = 0x68       # via i2cdetect
 
 # Aktivieren, um das Modul ansprechen zu koennen
