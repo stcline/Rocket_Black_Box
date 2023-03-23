@@ -1,13 +1,16 @@
-# Date: 2016-05-31
+# Adapted from @CPlanner's example on Adafruit (3-1-19) 
+# This script may be used to test the PY-521
 # Read data from MPU6050
 
+# Import modules
 import smbus
 import math
 
-# Register
+# Register setup
 power_mgmt_1 = 0x6b
 power_mgmt_2 = 0x6c
 
+# Read register data
 def read_byte(reg):
     return bus.read_byte_data(address, reg)
 
@@ -24,6 +27,7 @@ def read_word_2c(reg):
     else:
         return val
 
+# Convert raw register data to x,y and accelleration
 def dist(a ,b):
     return math.sqrt(( a *a ) +( b *b))
 
@@ -38,9 +42,10 @@ def get_x_rotation(x ,y ,z):
 bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
 address = 0x68       # via i2cdetect
 
-# Aktivieren, um das Modul ansprechen zu koennen
+# Activate module
 bus.write_byte_data(address, power_mgmt_1, 0)
 
+# Print raw and converted data from module
 print ("Gyroscope")
 print ("---------")
 
