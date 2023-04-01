@@ -1,5 +1,5 @@
 # Adapted from @CPlanner's example on Adafruit (3-1-19) 
-# This script may be used to test the PY-521
+# This script may be used to test the MPU6050 module
 # Read data from MPU6050
 
 # Import modules
