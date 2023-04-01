@@ -69,6 +69,6 @@ while True:
 	now = datetime.datetime.now()
 	with open('/home/pi/Documents/Rocket_Black_Box/Logs/rocketlog.csv', 'a', newline='') as csvfile:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az] + [Ax_scaled] + [Ay_scaled] + [Az_scaled])
+		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S.%ff")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az] + [Ax_scaled] + [Ay_scaled] + [Az_scaled])
   
-	sleep(.2)
+	sleep(.01)
