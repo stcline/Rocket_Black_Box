@@ -59,5 +59,5 @@ while True:
     acceleration_yout_scaled = acceleration_yout / 16384.0
     acceleration_zout_scaled = acceleration_zout / 16384.0
 
-    print ("Gyro(scaled) in deg/sec - xout: ", "%6d" % acceleration_xout_scaled, " yout: ", "%6d" % acceleration_yout_scaled, " zout: ", "%6d" % acceleration_zout_scaled, " Accel(scaled) in gs - xout: ", "%6d" % acceleration_xout_scaled, " yout: ", "%6d" % acceleration_yout_scaled, " zout: ", "%6d" % acceleration_zout_scaled)
-    sleep(1)
+    print ("Gyro(scaled) in deg/sec - xout: ","%.3f" % acceleration_xout_scaled, " yout: ", "%.3f" % acceleration_yout_scaled, " zout: ", "%.3f" % acceleration_zout_scaled, " Accel(scaled) in gs - xout: ", "%.3f" % acceleration_xout_scaled, " yout: ", "%.3f" % acceleration_yout_scaled, " zout: ", "%.3f" % acceleration_zout_scaled)
+    sleep(.01)
