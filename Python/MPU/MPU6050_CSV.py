@@ -5,88 +5,70 @@
   This modification to the script will print output to a csv 20 times per second.
 '''
 import smbus			#import SMBus module of I2C
+import math
 from time import sleep          #import
 import datetime
 import csv
 
-#some MPU6050 Registers and their Address
-PWR_MGMT_1   = 0x6B
-SMPLRT_DIV   = 0x19
-CONFIG       = 0x1A
-GYRO_CONFIG  = 0x1B
-INT_ENABLE   = 0x38
-ACCEL_XOUT_H = 0x3B
-ACCEL_YOUT_H = 0x3D
-ACCEL_ZOUT_H = 0x3F
-GYRO_XOUT_H  = 0x43
-GYRO_YOUT_H  = 0x45
-GYRO_ZOUT_H  = 0x47
+# Register setup
+power_mgmt_1 = 0x6b
+power_mgmt_2 = 0x6c
 
+# Read register data
+def read_byte(reg):
+    return bus.read_byte_data(address, reg)
 
-def MPU_Init():
-	#write to sample rate register
-	bus.write_byte_data(Device_Address, SMPLRT_DIV, 7)
-	
-	#Write to power management register
-	bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
-	
-	#Write to Configuration register
-	bus.write_byte_data(Device_Address, CONFIG, 0)
-	
-	#Write to Gyro configuration register
-	bus.write_byte_data(Device_Address, GYRO_CONFIG, 24)
-	
-	#Write to interrupt enable register
-	bus.write_byte_data(Device_Address, INT_ENABLE, 1)
+def read_word(reg):
+    h = bus.read_byte_data(address, reg)
+    l = bus.read_byte_data(address, reg +1)
+    value = (h << 8) + l
+    return value
 
-def read_raw_data(addr):
-	#Accelero and Gyro value are 16-bit
-        high = bus.read_byte_data(Device_Address, addr)
-        low = bus.read_byte_data(Device_Address, addr+1)
-    
-        #concatenate higher and lower value
-        value = ((high << 8) | low)
-        
-        #to get signed value from mpu6050
-        if(value > 32768):
-                value = value - 65536
-        return value
+def read_word_2c(reg):
+    val = read_word(reg)
+    if (val >= 0x8000):
+        return -((65535 - val) + 1)
+    else:
+        return val
 
+# Convert raw register data to x,y and accelleration
+def dist(a ,b):
+    return math.sqrt(( a *a ) +( b *b))
 
-bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
-Device_Address = 0x68   # MPU6050 device address
+def get_y_rotation(x ,y ,z):
+    radians = math.atan2(x, dist(y ,z))
+    return -math.degrees(radians)
 
-MPU_Init()
+def get_x_rotation(x ,y ,z):
+    radians = math.atan2(y, dist(x ,z))
+    return math.degrees(radians)
+
+bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
+address = 0x68       # via i2cdetect
+
+# Activate module
+bus.write_byte_data(address, power_mgmt_1, 0)
 
 print (" Reading Data of Gyroscope and Accelerometer")
 
 while True:
-	
-	#Read Accelerometer raw value
-	acc_x = read_raw_data(ACCEL_XOUT_H)
-	acc_y = read_raw_data(ACCEL_YOUT_H)
-	acc_z = read_raw_data(ACCEL_ZOUT_H)
-	
-	#Read Gyroscope raw value
-	gyro_x = read_raw_data(GYRO_XOUT_H)
-	gyro_y = read_raw_data(GYRO_YOUT_H)
-	gyro_z = read_raw_data(GYRO_ZOUT_H)
-	
-	#Full scale range +/- 250 degree/C as per sensitivity scale factor
-	Ax = acc_x/16384.0
-	Ay = acc_y/16384.0
-	Az = acc_z/16384.0
-	
-	Gx = gyro_x/131.0
-	Gy = gyro_y/131.0
-	Gz = gyro_z/131.0
-	
+	Gx = read_word_2c(0x43)
+	Gy = read_word_2c(0x45)
+	Gz = read_word_2c(0x47)
+
+	Ax = read_word_2c(0x3b)
+	Ay = read_word_2c(0x3d)
+	Az = read_word_2c(0x3f)
+
+	Ax_scaled = Ax / 16384.0
+	Ay_scaled = Ay / 16384.0
+	Az_scaled = Az / 16384.0
 
 	print ("Gx=%.2f" %Gx, u'\u00b0'+ "/s", "\tGy=%.2f" %Gy, u'\u00b0'+ "/s", "\tGz=%.2f" %Gz, u'\u00b0'+ "/s", "\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
   
 	now = datetime.datetime.now()
-	with open('/home/pi/Rocket_Black_Box/rocketlog.csv', 'a', newline='') as csvfile:
+	with open('/home/pi/Rocket_Black_Box/Logs/rocketlog.csv', 'a', newline='') as csvfile:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az])
+		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az] + [Ax_scaled] + [Ay_scaled] + [Az_scaled])
   
 	sleep(.2)
