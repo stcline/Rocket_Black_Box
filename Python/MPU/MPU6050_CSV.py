@@ -74,7 +74,7 @@ while True:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
 		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S.%f")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az] + [Ax_scaled] + [Ay_scaled] + [Az_scaled])
   
-	time.sleep(.01)
+    time.sleep(.01)
 
     if time.time() > timeout:
         break
