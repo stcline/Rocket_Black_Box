@@ -5,18 +5,17 @@ This script runs a Raspberry Pi Zero W in order to record flight data.
 The equipment included in this device are:
   - Raspberry Pi Zero W
   - HD Camera Module with wide angle lens
-  - GY-521 3 Axis Accelerometer Gyroscope Module
+  - MPU6050 Accelerometer Gyroscope Module
   - piezoelelctric buzzer
   - LED of any color
 
 The script does the following:
-  - waits for button to be pressed to arm
-  - waits for a second press to begin
-  - when pressed, begins a timer
-  - plays a tone indicating it is ready
+  - flashes an LED and buzzes a buzzer 10 times to indicate it is running
+  - waits for a button to be pressed
   - turns on an indicator light when recording begins
   - begins recording video
   - begins recording accelleration and 6 DOF axis position (maybe GPS too)
+  - runs for 5 minutes
 """
 
 # import libraries

@@ -1,8 +1,22 @@
-# Attach a button to GPIO 23 and set it up as an input
-# Attach a buzzer to GPIO 4 and set it up as an output
-# Attach an LED to GPIO 17 and set it up as an output
-# An LED will flash and a buzzer will sound ten times to indicate that the script is running
-# When the button is pressed, all the scripts are run
+# Steve Cline - April 3, 2023
+"""This script runs a Raspberry Pi Zero W in order to record flight data.
+
+The equipment included in this device are:
+  - Raspberry Pi Zero W
+  - HD Camera Module with wide angle lens
+  - MPU6050 Accelerometer Gyroscope Module
+  - button module and a 1.6k ohm resistor (GPIO 23)
+  - piezoelelctric buzzer (GPIO 4)
+  - LED of any color (GPIO 17)
+
+The script does the following:
+  - flashes an LED and buzzes a buzzer 10 times to indicate it is running
+  - waits for a button to be pressed
+  - turns on an indicator light when recording begins
+  - begins recording video
+  - begins recording accelleration and 6 DOF axis position (maybe GPS too)
+  - runs for 5 minutes
+"""
 
 import RPi.GPIO as GPIO
 import time
@@ -35,6 +49,6 @@ while True:
     if input_state == False:
         print('Button Pressed')
         GPIO.output(ledPin, GPIO.HIGH)
-        subprocess.Popen(['python', 'black_box_led.py'])
-        subprocess.Popen(['python', 'MPU6050_CSV.py'])
+        subprocess.Popen(['python3', 'black_box_led.py'])
+        subprocess.Popen(['python3', 'MPU6050_CSV.py'])
         time.sleep(0.2)
