@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 
 #Set up the camera
 camera = PiCamera()
-rectime = 5 #recording time
+rectime = 5 #recording time (5 seconds is for testing only - change to 300 at final)
 camera.rotation = 180
 
 #Set up the indicator light
