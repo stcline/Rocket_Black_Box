@@ -51,7 +51,7 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 print (" Reading Data of Gyroscope and Accelerometer")
 
-//timeout = time.time() + 60*5   # 5 minutes from now
+# timeout = time.time() + 60*5   # 5 minutes from now
 timeout = time.time() + 5   # 5 seconds from now
 
 while True:
