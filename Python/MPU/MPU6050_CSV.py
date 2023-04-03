@@ -6,7 +6,7 @@
 '''
 import smbus			#import SMBus module of I2C
 import math
-from time import sleep          #import
+import time
 import datetime
 import csv
 
@@ -51,6 +51,9 @@ bus.write_byte_data(address, power_mgmt_1, 0)
 
 print (" Reading Data of Gyroscope and Accelerometer")
 
+//timeout = time.time() + 60*5   # 5 minutes from now
+timeout = time.time() + 5   # 5 seconds from now
+
 while True:
 	Gx = read_word_2c(0x43)
 	Gy = read_word_2c(0x45)
@@ -71,4 +74,7 @@ while True:
 		logwriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
 		logwriter.writerow([now.strftime("%Y")] + [now.strftime("%d")] + [now.strftime("%m")] + [now.strftime("%H")] + [now.strftime("%M")] + [now.strftime("%S.%f")] + [Gx] + [Gy] + [Gz] + [Ax] +[Ay] + [Az] + [Ax_scaled] + [Ay_scaled] + [Az_scaled])
   
-	sleep(.01)
+	time.sleep(.01)
+
+    if time.time() > timeout:
+        break
