@@ -30,6 +30,9 @@ ledPin = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+# Set up the LED
+GPIO.setup(ledPin, GPIO.OUT)
+
 # Set up the buzzer
 GPIO.setup(BuzzerPin, GPIO.OUT)
 GPIO.setwarnings(False)
@@ -46,9 +49,12 @@ for i in range(10):
 
 while True:
     input_state = GPIO.input(buttonPin)
-    if input_state == False:
+    if not input_state:
         print('Button Pressed')
         GPIO.output(ledPin, GPIO.HIGH)
         subprocess.Popen(['python3', 'black_box_led.py'])
         subprocess.Popen(['python3', 'MPU6050_CSV.py'])
-        time.sleep(0.2)
+        time.sleep(5)
+
+    else:
+        GPIO.output(ledPin, GPIO.LOW)
