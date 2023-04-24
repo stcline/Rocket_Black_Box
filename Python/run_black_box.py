@@ -52,7 +52,7 @@ while True:
     if not input_state:
         print('Button Pressed')
         GPIO.output(ledPin, GPIO.HIGH)
-        subprocess.Popen(['python3', 'black_box_led.py'])
+        subprocess.Popen(['python3', 'Camera_to_file.py'])
         subprocess.Popen(['python3', 'MPU6050_CSV.py'])
         time.sleep(5)
 
